@@ -1,7 +1,9 @@
 const templates = document.querySelector(`#templates`);
 const screensTemplates = templates.content.querySelectorAll(`.main`);
 const root = document.querySelector(`.main`);
+
 let screenKey = 0;
+
 const screens = [
   screensTemplates[4],
   screensTemplates[0],
@@ -10,14 +12,14 @@ const screens = [
   screensTemplates[1],
 ];
 
-const showScreen = (key) => {
-  root.innerHTML = ``;
-  root.appendChild(screens[key]);
-};
-
 const ARROW_KEYS = {
   37: `ArrowLeft`,
   39: `ArrowRight`,
+};
+
+const showScreen = (key) => {
+  root.innerHTML = ``;
+  root.appendChild(screens[key]);
 };
 
 const onKeydown = (e) => {
