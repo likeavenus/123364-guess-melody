@@ -13,8 +13,8 @@ const screens = [
 ];
 
 const ARROW_KEYS = {
-  37: `ArrowLeft`,
-  39: `ArrowRight`,
+  LEFT: 37,
+  RIGHT: 39,
 };
 
 const showScreen = (key) => {
@@ -32,23 +32,23 @@ const onKeydown = (e) => {
   const code = e.keyCode;
   const prevScreenKey = screenKey;
 
-  switch (ARROW_KEYS[code]) {
-    case `ArrowLeft`: {
+  switch (code) {
+    case ARROW_KEYS.LEFT: {
       if (screenKey === 0) {
         break;
       }
 
-      screenKey -= 1;
+      screenKey--;
 
       break;
     }
 
-    case `ArrowRight`: {
+    case ARROW_KEYS.RIGHT: {
       if (screenKey === screens.length - 1) {
         break;
       }
 
-      screenKey += 1;
+      screenKey++;
 
       break;
     }
