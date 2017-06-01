@@ -6,9 +6,9 @@
  * @return {HTMLElement}
  */
 export const getElementFromTemplate = (templateString) => {
-  const container = document.createElement(`div`);
+  const container = document.createElement(`template`);
 
   container.innerHTML = templateString;
 
-  return container.children[0].content;
+  return container.content;
 };

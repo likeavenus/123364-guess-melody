@@ -1,4 +1,4 @@
-import welcome from './main-welcome';
-import {showScreen} from './show-screen';
+import welcome from './screens/welcome';
+import {showScreen} from './helpers/show-screen';
 
 showScreen(welcome);
