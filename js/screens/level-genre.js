@@ -60,7 +60,7 @@ const resetCheckboxes = () => {
   Array.from(answerCheckboxes).forEach((checkbox) => {
     checkbox.checked = false;
   });
-}
+};
 
 Array.from(answerCheckboxes).forEach((input) => {
   input.addEventListener(`change`, () => {
@@ -71,6 +71,7 @@ Array.from(answerCheckboxes).forEach((input) => {
 sendButton.addEventListener(`click`, () => {
   showScreen(result[Math.trunc(Math.random())]);
   resetCheckboxes();
+  validateForm();
 });
 
 validateForm();
