@@ -6,7 +6,7 @@ import logo from './common/logo';
 
 const template = (state) => `
 <section class="main main--result">
-  ${logo}
+  ${logo()}
 
   <h2 class="title">${state.title}</h2>
   <div class="main-stat">За&nbsp;${state.time}&nbsp;минуты<br>вы&nbsp;отгадали ${state.rightAnswers}&nbsp;мелодии</div>
@@ -15,7 +15,7 @@ const template = (state) => `
 </section>
 `;
 
-const screen = getElementFromTemplate(template(Object.assign({}, model.level[`result-win`], model.statistic)));
+const screen = getElementFromTemplate(template(Object.assign({}, model.level.resultWin, model.statistic)));
 const replayButton = screen.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, () => {

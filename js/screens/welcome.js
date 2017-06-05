@@ -6,7 +6,7 @@ import logo from './common/logo';
 
 const template = (state) => `
 <section class="main main--welcome">
-  ${logo}
+  ${logo()}
 
   <button class="main-play">Начать игру</button>
   <h2 class="title main-title">${state.title}</h2>
@@ -14,7 +14,7 @@ const template = (state) => `
 </section>
 `;
 
-const screen = getElementFromTemplate(template(model.level[`welcome`]));
+const screen = getElementFromTemplate(template(model.level.welcome));
 
 const playButton = screen.querySelector(`.main-play`);
 

@@ -32,13 +32,13 @@ const template = (state) => `
             ${answer.label}
           </label>
         </div>
-      `)}
+      `).join(``)}
     </form>
   </div>
 </section>
 `;
 
-const screen = getElementFromTemplate(template(model.level[`level-artist`]));
+const screen = getElementFromTemplate(template(model.level.levelArtist));
 
 const answerButtons = screen.querySelectorAll(`.main-answer`);
 

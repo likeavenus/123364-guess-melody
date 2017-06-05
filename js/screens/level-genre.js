@@ -16,13 +16,13 @@ const template = (state) => `
       <input type="checkbox" name="answer" value="answer-${answer.id}" id="a-${answer.id}">
       <label class="genre-answer-check" for="a-${answer.id}"></label>
     </div>
-  `)}
+  `).join(``)}
     <button class="genre-answer-send" type="submit">Ответить</button>
   </form>
 </section>
 `;
 
-const screen = getElementFromTemplate(template(model.level[`level-genre`]));
+const screen = getElementFromTemplate(template(model.level.levelGenre));
 const answerCheckboxes = screen.querySelectorAll(`input[type="checkbox"]`);
 const sendButton = screen.querySelector(`.genre-answer-send`);
 

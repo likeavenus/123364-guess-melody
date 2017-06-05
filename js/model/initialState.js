@@ -1,11 +1,11 @@
 export default Object.freeze({
   level: {
-    'welcome': {
+    welcome: {
       title: `Правила игры`,
       text: `Правила просты&nbsp;— за&nbsp;2 минуты дать максимальное количество правильных ответов.
       Удачи!`,
     },
-    'level-artist': {
+    levelArtist: {
       title: `Кто исполняет эту песню?`,
       answers: [
         {
@@ -25,7 +25,7 @@ export default Object.freeze({
         },
       ],
     },
-    'level-genre': {
+    levelGenre: {
       title: `Выберите инди-рок треки`,
       answers: [
         {
@@ -46,10 +46,10 @@ export default Object.freeze({
         },
       ],
     },
-    'result-win': {
+    resultWin: {
       title: `Вы настоящий меломан!`,
     },
-    'result-lose': {
+    resultLose: {
       title: `Вы проиграли`,
       text: `Ничего, вам повезет в следующий раз`,
     },
