@@ -1,8 +1,9 @@
 import levelGenre from './level-genre';
 import {getElementFromTemplate} from '../helpers/getElementFromTemplate';
 import {showScreen} from '../helpers/show-screen';
+import model from '../model/initialState';
 
-const template = `
+const template = (state) => `
 <section class="main main--level main--level-artist">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
@@ -20,38 +21,24 @@ const template = `
   <div class="main-wrap">
     <div class="main-timer"></div>
 
-    <h2 class="title main-title">Кто исполняет эту песню?</h2>
+    <h2 class="title main-title">${state.title}</h2>
     <div class="player-wrapper"></div>
     <form class="main-list">
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1" />
-        <label class="main-answer" for="answer-1">
-          <img class="main-answer-preview" src="">
-          Пелагея
-        </label>
-      </div>
-
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
-        <label class="main-answer" for="answer-2">
-          <img class="main-answer-preview" src="">
-          Краснознаменная дивизия имени моей бабушки
-        </label>
-      </div>
-
-      <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
-        <label class="main-answer" for="answer-2">
-          <img class="main-answer-preview" src="">
-          Lorde
-        </label>
-      </div>
+      ${state.answers.map((answer) => `
+        <div class="main-answer-wrapper">
+          <input class="main-answer-r" type="radio" id="answer-${answer.id}" name="answer" value="val-${answer.id}" />
+          <label class="main-answer" for="answer-${answer.id}">
+            <img class="main-answer-preview" src="${answer.imageSrc}">
+            ${answer.label}
+          </label>
+        </div>
+      `).join(``)}
     </form>
   </div>
 </section>
 `;
 
-const screen = getElementFromTemplate(template);
+const screen = getElementFromTemplate(template(model.level.levelArtist));
 
 const answerButtons = screen.querySelectorAll(`.main-answer`);
 

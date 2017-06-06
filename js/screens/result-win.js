@@ -1,19 +1,21 @@
 import welcome from './welcome';
 import {getElementFromTemplate} from '../helpers/getElementFromTemplate';
 import {showScreen} from '../helpers/show-screen';
+import model from '../model/initialState';
+import logo from './common/logo';
 
-const template = `
+const template = (state) => `
 <section class="main main--result">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  ${logo()}
 
-  <h2 class="title">Вы настоящий меломан!</h2>
-  <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали 4&nbsp;мелодии</div>
-  <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;80%&nbsp;игроков</span>
+  <h2 class="title">${state.title}</h2>
+  <div class="main-stat">За&nbsp;${state.time}&nbsp;минуты<br>вы&nbsp;отгадали ${state.rightAnswers}&nbsp;мелодии</div>
+  <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${state.otherPlayersPercent}%&nbsp;игроков</span>
   <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
 </section>
 `;
 
-const screen = getElementFromTemplate(template);
+const screen = getElementFromTemplate(template(Object.assign({}, model.level.resultWin, model.statistic)));
 const replayButton = screen.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, () => {

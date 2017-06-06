@@ -1,21 +1,20 @@
 import levelArtist from './level-artist';
 import {getElementFromTemplate} from '../helpers/getElementFromTemplate';
 import {showScreen} from '../helpers/show-screen';
+import model from '../model/initialState';
+import logo from './common/logo';
 
-const template = `
+const template = (state) => `
 <section class="main main--welcome">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  ${logo()}
+
   <button class="main-play">Начать игру</button>
-  <h2 class="title main-title">Правила игры</h2>
-  <p class="text main-text">
-    Правила просты&nbsp;— за&nbsp;2 минуты дать
-    максимальное количество правильных ответов.<br>
-    Удачи!
-  </p>
+  <h2 class="title main-title">${state.title}</h2>
+  <p class="text main-text">${state.text}</p>
 </section>
 `;
 
-const screen = getElementFromTemplate(template);
+const screen = getElementFromTemplate(template(model.level.welcome));
 
 const playButton = screen.querySelector(`.main-play`);
 
