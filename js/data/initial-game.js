@@ -227,7 +227,7 @@ export const initialGame = Object.freeze({
 
 export const setLives = (state, lives) => {
   if (lives < 0) {
-    throw new Error(`Жизнь не может быть меньше нуля`);
+    throw new RangeError(`Жизнь не может быть меньше нуля`);
   }
 
   const game = Object.assign({}, state);
@@ -241,7 +241,7 @@ export const setNextLevel = (state, level = null) => {
   const nextLevel = level || state.level + 1;
 
   if (!state.levels[nextLevel]) {
-    throw new Error(`Нет ${nextLevel} уровня`);
+    throw new RangeError(`Нет ${nextLevel + 1} уровня`);
   }
 
   const game = Object.assign({}, state);
@@ -249,4 +249,13 @@ export const setNextLevel = (state, level = null) => {
   game.level = nextLevel;
 
   return game;
+};
+
+export const isEndOfGame = (state) => {
+  try {
+    setNextLevel(state);
+    return false;
+  } catch (error) {
+    return true;
+  }
 };

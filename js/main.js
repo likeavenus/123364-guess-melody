@@ -1,4 +1,3 @@
-import welcome from './screens/welcome';
-import {showScreen} from './helpers/show-screen';
+import {startNewGame} from './helpers/game';
 
-showScreen(welcome);
+startNewGame();
