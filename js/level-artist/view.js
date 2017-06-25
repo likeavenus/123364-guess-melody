@@ -32,7 +32,7 @@ export default class LevelArtist extends AbstractView {
           <form class="main-list">
             ${this.level.answers.map((answer) => `
               <div class="main-answer-wrapper">
-                <input class="main-answer-r" type="radio" id="answer-${answer.id}" name="answer" value="val-${answer.id}" />
+                <input class="main-answer-r" type="radio" id="answer-${answer.id}" name="answer" value="${answer.id}" />
                 <label class="main-answer" for="answer-${answer.id}">
                   <img class="main-answer-preview" src="${answer.imageSrc}">
                   ${answer.label}
@@ -46,11 +46,11 @@ export default class LevelArtist extends AbstractView {
   }
 
   bind() {
-    const answerButtons = this.element.querySelectorAll(`.main-answer`);
+    const answerButtons = this.element.querySelectorAll(`.main-answer-r`);
 
     Array.from(answerButtons).forEach((button) => {
-      button.addEventListener(`click`, () => {
-        this.onClick();
+      button.addEventListener(`change`, (e) => {
+        this.onClick(this.state, [+e.target.value]);
       });
     });
   }

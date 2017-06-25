@@ -18,7 +18,7 @@ export default class LevelGenre extends AbstractView {
         ${this.level.answers.map((answer) => `
           <div class="genre-answer">
             <div class="player-wrapper"></div>
-            <input type="checkbox" name="answer" value="answer-${answer.id}" id="a-${answer.id}">
+            <input type="checkbox" name="answer" value="${answer.id}" id="a-${answer.id}">
             <label class="genre-answer-check" for="a-${answer.id}"></label>
           </div>
         `).join(``)}
@@ -40,7 +40,9 @@ export default class LevelGenre extends AbstractView {
     });
 
     this.sendButton.addEventListener(`click`, () => {
-      this.onClick();
+      const answers = this.getAnswers();
+
+      this.onClick(this.state, answers);
     });
   }
 
@@ -55,6 +57,14 @@ export default class LevelGenre extends AbstractView {
   isSomeCheckboxChecked() {
     return Array.from(this.answerCheckboxes).some((checkbox) => {
       return checkbox.checked;
+    });
+  }
+
+  getAnswers() {
+    return Array.from(this.answerCheckboxes).filter((checkbox) => {
+      return checkbox.checked;
+    }).map((checkbox) => {
+      return +checkbox.value;
     });
   }
 }

@@ -22,6 +22,7 @@ export const initialGame = Object.freeze({
           label: `Lorde`,
         },
       ],
+      answer: [2],
     },
     {
       type: `genre`,
@@ -44,6 +45,7 @@ export const initialGame = Object.freeze({
           audio: ``,
         },
       ],
+      answer: [4],
     },
     {
       type: `artist`,
@@ -65,6 +67,7 @@ export const initialGame = Object.freeze({
           label: `Lorde`,
         },
       ],
+      answer: [2],
     },
     {
       type: `genre`,
@@ -87,6 +90,7 @@ export const initialGame = Object.freeze({
           audio: ``,
         },
       ],
+      answer: [4],
     },
     {
       type: `artist`,
@@ -108,6 +112,7 @@ export const initialGame = Object.freeze({
           label: `Lorde`,
         },
       ],
+      answer: [2],
     },
     {
       type: `genre`,
@@ -130,6 +135,7 @@ export const initialGame = Object.freeze({
           audio: ``,
         },
       ],
+      answer: [4],
     },
     {
       type: `artist`,
@@ -151,6 +157,7 @@ export const initialGame = Object.freeze({
           label: `Lorde`,
         },
       ],
+      answer: [2],
     },
     {
       type: `genre`,
@@ -173,6 +180,7 @@ export const initialGame = Object.freeze({
           audio: ``,
         },
       ],
+      answer: [4],
     },
     {
       type: `artist`,
@@ -194,6 +202,7 @@ export const initialGame = Object.freeze({
           label: `Lorde`,
         },
       ],
+      answer: [2],
     },
     {
       type: `genre`,
@@ -216,11 +225,12 @@ export const initialGame = Object.freeze({
           audio: ``,
         },
       ],
+      answer: [4],
     }
   ],
   statistic: {
     time: 2,
-    rightAnswers: 4,
+    rightAnswers: 0,
     otherPlayersPercent: 80,
   },
 });
@@ -252,10 +262,47 @@ export const setNextLevel = (state, level = null) => {
 };
 
 export const isEndOfGame = (state) => {
+  if (state.lives === 0) {
+    return [true, `endLives`];
+  }
+
+  // Если следующего уровня нет, значит конец игры
   try {
     setNextLevel(state);
-    return false;
+    return [false];
   } catch (error) {
-    return true;
+    return [true, `endQuests`];
   }
+};
+
+export const setAnswer = (state, answer) => {
+  const quest = state.levels[state.level - 1];
+  const correctAnswer = quest.answer;
+  let game = null;
+
+  if (isCorrectAnswer(correctAnswer, answer)) {
+    game = setCorrectAnswerToStatistic(state);
+  } else {
+    game = setLives(state, state.lives - 1);
+  }
+
+  return game;
+};
+
+const isCorrectAnswer = (correctAnswer, answer) => {
+  const userAnswer = answer.sort((a, b) => {
+    return a - b;
+  });
+
+  return correctAnswer.every((item, i) => {
+    return item === userAnswer[i];
+  });
+};
+
+export const setCorrectAnswerToStatistic = (state) => {
+  const game = Object.assign({}, state);
+
+  game.statistic.rightAnswers += 1;
+
+  return game;
 };

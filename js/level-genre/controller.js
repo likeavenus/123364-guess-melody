@@ -1,12 +1,15 @@
 import LevelGenre from './view';
 import {showNextScreen} from '../helpers/game';
+import {setAnswer} from '../data/initial-game';
 
 export default (state) => {
-  const levelArtist = new LevelGenre(state);
+  const levelGenre = new LevelGenre(state);
 
-  levelArtist.onClick = () => {
-    showNextScreen(state);
+  levelGenre.onClick = (currentState, answer) => {
+    const newState = setAnswer(currentState, answer);
+
+    showNextScreen(newState);
   };
 
-  return levelArtist;
+  return levelGenre;
 };

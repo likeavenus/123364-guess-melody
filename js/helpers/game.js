@@ -12,11 +12,16 @@ export const showNextScreen = (state) => {
   const level = getScreen(levelType);
 
   const endOfGame = isEndOfGame(state);
+  const isEnd = endOfGame[0];
 
-  if (endOfGame) {
-    const winScreen = getScreen(`win`);
+  if (isEnd) {
+    const endType = endOfGame[1];
 
-    showScreen(winScreen(state));
+    if (endType === `endLives`) {
+      endGame();
+    } else if (endType === `endQuests`) {
+      winGame(state);
+    }
   } else {
     showScreen(level(setNextLevel(state)));
   }
@@ -26,4 +31,16 @@ export const startNewGame = () => {
   const welcome = getScreen(`welcome`);
 
   showScreen(welcome());
+};
+
+export const endGame = () => {
+  const loseScreen = getScreen(`lose`);
+
+  showScreen(loseScreen());
+};
+
+export const winGame = (state) => {
+  const winScreen = getScreen(`win`);
+
+  showScreen(winScreen(state));
 };

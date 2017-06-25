@@ -1,11 +1,11 @@
 import ResultLose from './view';
-import {showNextScreen} from '../helpers/game';
+import {startNewGame} from '../helpers/game';
 
 export default (state) => {
   const resultLose = new ResultLose(state);
 
   resultLose.onClick = () => {
-    // showNextScreen(state);
+    startNewGame();
   };
 
   return resultLose;
