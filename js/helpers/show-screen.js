@@ -1,6 +1,6 @@
 const root = document.querySelector(`.main`);
 
-export const showScreen = (element) => {
+export const showScreen = (view) => {
   root.innerHTML = ``;
-  root.appendChild(element);
+  root.appendChild(view.element);
 };
