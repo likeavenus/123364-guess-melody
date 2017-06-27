@@ -1,6 +1,7 @@
 export const initialGame = Object.freeze({
   lives: 3,
   level: 0,
+  time: 120,
   levels: [
     {
       type: `artist`,
@@ -243,6 +244,12 @@ export const setLives = (state, lives) => {
   const game = Object.assign({}, state);
 
   game.lives = lives;
+
+  return game;
+};
+
+export const updateTime = (state, time) => {
+  const game = Object.assign({}, state, {time});
 
   return game;
 };

@@ -1,12 +1,8 @@
 import {showScreen} from '../helpers/show-screen';
 import {getScreen} from '../helpers/get-screen';
 import {setNextLevel, isEndOfGame} from '../data/initial-game';
+import initializeTimer from '../timer/controller';
 
-/**
- * Переход на следующий экран
- *
- * @param {Object} state - состояние игры
- */
 export const showNextScreen = (state) => {
   const levelType = state.levels[state.level].type;
   const level = getScreen(levelType);
@@ -33,8 +29,17 @@ export const startNewGame = () => {
   showScreen(welcome());
 };
 
+export const beginGame = (state) => {
+  const timerContainer = document.querySelector(`.main-timer`);
+  initializeTimer(state, timerContainer);
+
+  showNextScreen(state);
+};
+
 export const endGame = () => {
   const loseScreen = getScreen(`lose`);
+  const timerContainer = document.querySelector(`.main-timer`);
+  timerContainer.innerHTML = ``;
 
   showScreen(loseScreen());
 };
