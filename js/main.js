@@ -1,3 +1,3 @@
-import {startNewGame} from './helpers/game';
+import App from './app';
 
-startNewGame();
+App.start();

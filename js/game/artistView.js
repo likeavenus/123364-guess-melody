@@ -1,11 +1,10 @@
 import AbstractView from '../helpers/abstract-view';
 
 export default class LevelArtist extends AbstractView {
-  constructor(state) {
+  constructor(level) {
     super();
 
-    this.state = state;
-    this.level = this.state.levels[this.state.level - 1];
+    this.level = level;
   }
 
   get template() {
@@ -35,7 +34,7 @@ export default class LevelArtist extends AbstractView {
 
     Array.from(answerButtons).forEach((button) => {
       button.addEventListener(`change`, (e) => {
-        this.onClick(this.state, [+e.target.value]);
+        this.onClick([+e.target.value]);
       });
     });
   }

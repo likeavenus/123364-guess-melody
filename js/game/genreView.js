@@ -4,8 +4,7 @@ export default class LevelGenre extends AbstractView {
   constructor(state) {
     super();
 
-    this.state = state;
-    this.level = this.state.levels[this.state.level - 1];
+    this.level = state;
     this.sendButton = null;
     this.answerCheckboxes = null;
   }
@@ -39,10 +38,12 @@ export default class LevelGenre extends AbstractView {
       });
     });
 
-    this.sendButton.addEventListener(`click`, () => {
+    this.sendButton.addEventListener(`click`, (e) => {
+      e.preventDefault();
+
       const answers = this.getAnswers();
 
-      this.onClick(this.state, answers);
+      this.onClick(answers);
     });
   }
 
