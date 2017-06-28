@@ -23,7 +23,11 @@ describe(`Модель игры`, () => {
 
     it(`Выбрасывает ошибку, если следующего уровня нет`, () => {
       const setErrorLevel = () => {
-        setNextLevel(initialGame, 20);
+        const game = {
+          level: 20,
+        };
+
+        setNextLevel(game);
       };
 
       assert.throws(setErrorLevel);

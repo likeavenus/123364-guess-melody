@@ -256,10 +256,10 @@ export const updateTime = (state, time) => {
   return game;
 };
 
-export const setNextLevel = (state, level = null) => {
-  const nextLevel = level || state.level + 1;
+export const setNextLevel = (state) => {
+  const nextLevel = state.level + 1;
 
-  if (!state.levels[nextLevel]) {
+  if (!levels[nextLevel]) {
     throw new RangeError(`Нет ${nextLevel + 1} уровня`);
   }
 
