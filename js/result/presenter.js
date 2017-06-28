@@ -1,6 +1,7 @@
 import win from './winView';
 import lose from './loseView';
 import {showScreen} from '../helpers/show-screen';
+import {getHashObject} from '../helpers/location';
 import app from '../app';
 
 const view = {
@@ -9,10 +10,14 @@ const view = {
 };
 
 export default class Result {
-  constructor(state, isWin) {
+  constructor() {
     this.view = null;
-    this.state = state;
-    this.isWin = isWin;
+
+    const params = getHashObject(location.hash);
+    const isEmptyParams = !Object.keys(params).length;
+
+    this.state = isEmptyParams ? {} : params.state;
+    this.isWin = isEmptyParams ? false : params.status;
   }
 
   init() {

@@ -1,4 +1,4 @@
-import {initialGame, levels, stats, setAnswer, isEndOfGame, updateTime} from '../data/initial-game';
+import {initialGame, levels, stats, setAnswer, isEndOfGame, updateTime, setNextLevel} from '../data/initial-game';
 import {showScreen} from '../helpers/show-screen';
 import Timer from './timerView';
 import Artist from './artistView';
@@ -20,7 +20,9 @@ export default class Game {
   }
 
   get state() {
-    return Object.assign({}, this.game, {levels: this.levels}, {stats: this.stats});
+    const statistic = Object.assign({}, this.stats);
+
+    return Object.assign({}, this.game, {levels: this.levels}, {stats: statistic});
   }
 
   init() {
@@ -50,7 +52,7 @@ export default class Game {
   }
 
   showNextLevel() {
-    this.game.level += 1;
+    this.game = setNextLevel(this.game);
 
     const quest = this.getQuestState();
     const endGame = isEndOfGame(this.game.lives, quest);
