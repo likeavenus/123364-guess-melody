@@ -17,7 +17,7 @@
 
 .timer-value {
   color: $color-orange;
-  font-size: 2em;
+  font-size: 0;
   font-weight: 300;
   left: 50%;
   position: absolute;
@@ -27,6 +27,7 @@
 
 .timer-value-mins,
 .timer-value-secs {
+  font-size: 32px;
   display: inline-block;
   width: 2ex;
 }
@@ -40,6 +41,7 @@
 }
 
 .timer-value-dots {
+  font-size: 32px;
   animation: blink 1000ms steps(1, end) infinite;
 }
 

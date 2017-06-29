@@ -5,7 +5,7 @@ export default class Timer extends AbstractView {
   constructor(state) {
     super();
 
-    this.time = state.time;
+    this.time = state;
   }
 
   get template() {
