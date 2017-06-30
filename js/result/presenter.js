@@ -16,7 +16,7 @@ export default class Result {
     const params = getHashObject(location.hash);
     const isEmptyParams = !Object.keys(params).length;
 
-    this.state = isEmptyParams ? {} : params.state;
+    this.state = isEmptyParams ? {} : params.stats;
     this.isWin = isEmptyParams ? false : params.status;
   }
 

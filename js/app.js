@@ -36,13 +36,15 @@ class Application {
     location.hash = `game`;
   }
 
-  endGame(state, status) {
-    const obj = JSON.stringify({
-      state,
+  endGame(stats, status) {
+    const stateObj = JSON.stringify({
+      stats,
       status,
     });
 
-    location.hash = `result=${obj}`;
+    const encode = encodeURIComponent(stateObj);
+
+    location.hash = `result=${encode}`;
   }
 }
 

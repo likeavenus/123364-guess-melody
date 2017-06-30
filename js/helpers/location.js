@@ -7,6 +7,7 @@ export const getHash = (hash) => {
 export const getHashObject = (hash) => {
   const hashEnd = hash.indexOf(`=`);
   const object = hashEnd === -1 ? `{}` : hash.slice(hashEnd + 1, hash.length);
+  const decode = decodeURIComponent(object);
 
-  return JSON.parse(object);
+  return JSON.parse(decode);
 };

@@ -25,9 +25,15 @@ export default class Game {
     return Object.assign({}, this.game, {levels: this.levels}, {stats: statistic});
   }
 
+  get resultStats() {
+    const time = this.game.time;
+
+    return Object.assign({}, this.stats, {time});
+  }
+
   init() {
     const QuestView = this.getQuestView();
-    const state = this.getQuestState();
+    const state = this.getQuestState(this.game.level);
 
     const questView = new QuestView(state);
 
@@ -40,21 +46,17 @@ export default class Game {
   }
 
   getQuestView() {
-    const quest = this.getQuestState();
+    const quest = this.getQuestState(this.game.level);
 
     return view[quest.type];
   }
 
-  getQuestState() {
-    const level = this.game.level;
-
+  getQuestState(level) {
     return this.levels[level];
   }
 
   showNextLevel() {
-    this.game = setNextLevel(this.game);
-
-    const quest = this.getQuestState();
+    const quest = this.getQuestState(this.game.level + 1);
     const endGame = isEndOfGame(this.game.lives, quest);
     const isEnd = endGame[0];
 
@@ -63,13 +65,14 @@ export default class Game {
       this.stopTimer();
 
       if (endType === `lives`) {
-        app.endGame(this.state, false);
+        app.endGame(this.resultStats, false);
       } else if (endType === `quests`) {
-        app.endGame(this.state, true);
+        app.endGame(this.resultStats, true);
       } else {
         throw new TypeError(`Нет типа ${endType}`);
       }
     } else {
+      this.game = setNextLevel(this.game);
       this.init();
     }
   }
@@ -79,7 +82,7 @@ export default class Game {
     const container = document.querySelector(`.main-timer`);
 
     timer.finishGame = () => {
-      app.endGame(this.state, false);
+      app.endGame(this.resultStats, false);
     };
 
     timer.updateTime = (animation) => {
