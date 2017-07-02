@@ -1,4 +1,4 @@
-import {initialGame, setAnswer, isEndOfGame, updateTime, setNextLevel} from '../data/initial-game';
+import {initialGame, setAnswer, isEndOfGame, updateTime, setNextLevel, preprocessToSend} from '../data/initial-game';
 import {showScreen} from '../helpers/show-screen';
 import Timer from './timerView';
 import Artist from './artistView';
@@ -63,9 +63,9 @@ export default class Game {
       this.stopTimer();
 
       if (endType === `lives`) {
-        app.endGame(this.game, false);
+        this.endGame(false);
       } else if (endType === `quests`) {
-        app.endGame(this.game, true);
+        this.endGame(true);
       } else {
         throw new TypeError(`Нет типа ${endType}`);
       }
@@ -80,7 +80,7 @@ export default class Game {
     const container = document.querySelector(`.main-timer`);
 
     timer.finishGame = () => {
-      app.endGame(this.game, false);
+      this.endGame(false);
     };
 
     timer.updateTime = (animation) => {
@@ -108,5 +108,12 @@ export default class Game {
 
   updateState(state) {
     this.game = state.game;
+  }
+
+  endGame(status) {
+    const data = preprocessToSend(this.game);
+
+    app.model.send(data);
+    app.endGame(this.game, status);
   }
 }

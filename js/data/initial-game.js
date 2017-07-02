@@ -10,11 +10,11 @@ export const setLives = (state, lives) => {
     throw new RangeError(`Жизнь не может быть меньше нуля`);
   }
 
-  const game = Object.assign({}, state);
+  const newState = Object.assign({}, state);
 
-  game.lives = lives;
+  newState.game.lives = lives;
 
-  return game;
+  return newState;
 };
 
 export const updateTime = (state, time) => {
@@ -62,7 +62,7 @@ export const setAnswer = (state, answer) => {
   if (correctAnswer) {
     game = setCorrectAnswerToStatistic(state);
   } else {
-    game = setLives(state, state.lives - 1);
+    game = setLives(state, state.game.lives - 1);
   }
 
   return game;
@@ -130,4 +130,10 @@ export const getWinPersent = (state, stats) => {
   const newState = Object.assign({}, state, {winPersent});
 
   return newState;
+};
+
+export const preprocessToSend = (game) => {
+  const stateWithTime = setTime(game);
+
+  return {time: stateWithTime.time, answers: game.rightAnswers};
 };
