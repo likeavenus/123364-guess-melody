@@ -17,7 +17,7 @@ export default class LevelArtist extends AbstractView {
             ${this.quests.answers.map((answer) => `
               <div class="main-answer-wrapper">
                 <input class="main-answer-r" type="radio" id="answer-${answer.title}" name="answer" value="${answer.isCorrect}" />
-                <label class="main-answer" for="answer-${answer.title}">
+                <label class="main-answer" for="answer-${answer.title}" ${answer.isCorrect ? `style="background-color: red"` : ``}>
                   <img class="main-answer-preview" src="${answer.image.url}" width="${answer.image.width}" height="${answer.image.height}">
                   ${answer.title}
                 </label>
@@ -34,7 +34,7 @@ export default class LevelArtist extends AbstractView {
 
     Array.from(answerButtons).forEach((button) => {
       button.addEventListener(`change`, (e) => {
-        this.onClick(!e.target.value);
+        this.onClick(e.target.value === `true`);
       });
     });
   }

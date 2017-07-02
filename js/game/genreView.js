@@ -14,11 +14,11 @@ export default class LevelGenre extends AbstractView {
       <section class="main main--level main--level-genre">
         <h2 class="title">${this.quest.question}</h2>
         <form class="genre">
-        ${this.quest.answers.map((answer) => `
+        ${this.quest.answers.map((answer, i) => `
           <div class="genre-answer">
             <div class="player-wrapper" src="${answer.src}"></div>
-            <input type="checkbox" name="answer" value="${answer.genre}" id="a-${answer.genre}">
-            <label class="genre-answer-check" for="a-${answer.genre}"></label>
+            <input type="checkbox" name="answer" value="${answer.genre}" id="${i}-${answer.genre}">
+            <label ${this.quest.genre === answer.genre ? `style="background-color: red"` : ``} class="genre-answer-check" for="${i}-${answer.genre}"></label>
           </div>
         `).join(``)}
           <button class="genre-answer-send" type="submit" disabled>Ответить</button>

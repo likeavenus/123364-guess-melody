@@ -1,4 +1,4 @@
-import {initialGame, stats, setAnswer, isEndOfGame, updateTime, setNextLevel} from '../data/initial-game';
+import {initialGame, setAnswer, isEndOfGame, updateTime, setNextLevel} from '../data/initial-game';
 import {showScreen} from '../helpers/show-screen';
 import Timer from './timerView';
 import Artist from './artistView';
@@ -14,24 +14,17 @@ export default class Game {
   constructor(quests) {
     this.game = initialGame;
     this.quests = quests;
-    this.stats = stats;
   }
 
   get state() {
-    const statistic = Object.assign({}, this.stats);
+    const game = Object.assign({}, this.game);
+    const quests = Object.assign({}, this.quests);
 
-    return Object.assign({}, this.game, {quests: this.quests}, {stats: statistic});
-  }
-
-  get resultStats() {
-    const time = this.game.time;
-
-    return Object.assign({}, this.stats, {time});
+    return Object.assign({}, {game}, {quests});
   }
 
   init() {
     this.game = initialGame;
-    this.stats = stats;
     this.startTimer();
     this.continueGame();
   }
@@ -70,14 +63,14 @@ export default class Game {
       this.stopTimer();
 
       if (endType === `lives`) {
-        app.endGame(this.resultStats, false);
+        app.endGame(this.game, false);
       } else if (endType === `quests`) {
-        app.endGame(this.resultStats, true);
+        app.endGame(this.game, true);
       } else {
         throw new TypeError(`Нет типа ${endType}`);
       }
     } else {
-      this.game = setNextLevel(this.game);
+      this.game = setNextLevel(this.state);
       this.continueGame();
     }
   }
@@ -87,7 +80,7 @@ export default class Game {
     const container = document.querySelector(`.main-timer`);
 
     timer.finishGame = () => {
-      app.endGame(this.resultStats, false);
+      app.endGame(this.game, false);
     };
 
     timer.updateTime = (animation) => {
@@ -114,12 +107,6 @@ export default class Game {
   }
 
   updateState(state) {
-    this.game = {
-      level: state.level,
-      lives: state.lives,
-      time: state.time,
-    };
-    this.levels = state.levels;
-    this.stats = state.stats;
+    this.game = state.game;
   }
 }

@@ -2,9 +2,11 @@ import Welcome from './welcome/presenter';
 import Game from './game/presenter';
 import Result from './result/presenter';
 import {getHash} from './helpers/location';
+import Model from './data/model';
 
 class Application {
   constructor() {
+    this.model = new Model();
 
     window.onhashchange = () => {
       this.changeRoute();
@@ -12,10 +14,9 @@ class Application {
   }
 
   init() {
-    window.fetch(`https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`)
-      .then((response) => response.json())
-      .then((quests) => {
-        this.initRoutes(quests);
+    this.model.load()
+      .then((data) => {
+        this.initRoutes(data);
         this.changeRoute();
       });
   }
@@ -23,8 +24,8 @@ class Application {
   initRoutes(data) {
     this.routes = {
       '': new Welcome(),
-      'game': new Game(data),
-      'result': new Result(),
+      'game': new Game(data.quests),
+      'result': new Result(data.stats),
     };
   }
 
@@ -43,9 +44,9 @@ class Application {
     location.hash = `game`;
   }
 
-  endGame(stats, status) {
+  endGame(state, status) {
     const stateObj = JSON.stringify({
-      stats,
+      state,
       status,
     });
 
