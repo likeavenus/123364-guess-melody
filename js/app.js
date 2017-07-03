@@ -1,28 +1,50 @@
-import welcome from './welcome/presenter';
-import game from './game/presenter';
-import result from './result/presenter';
+import Welcome from './welcome/presenter';
+import Game from './game/presenter';
+import Result from './result/presenter';
+import {getHash} from './helpers/location';
 
-const presenter = {
-  WELCOME: welcome,
-  GAME: game,
-  RESULT: result,
+const route = {
+  '': Welcome,
+  'game': Game,
+  'result': Result,
 };
 
 class Application {
+  constructor() {
+
+    window.onhashchange = () => {
+      this.changeRoute();
+    };
+  }
+
+  init() {
+    this.changeRoute();
+  }
+
+  changeRoute() {
+    const hash = getHash(location.hash);
+    const presenter = new route[hash]();
+
+    presenter.init();
+  }
+
   start() {
-    presenter.WELCOME.init();
+    location.hash = ``;
   }
 
   startNewGame() {
-    const newGame = new presenter.GAME();
-
-    newGame.init();
+    location.hash = `game`;
   }
 
-  endGame(state, status) {
-    const gameResult = new presenter.RESULT(state, status);
+  endGame(stats, status) {
+    const stateObj = JSON.stringify({
+      stats,
+      status,
+    });
 
-    gameResult.init();
+    const encode = encodeURIComponent(stateObj);
+
+    location.hash = `result=${encode}`;
   }
 }
 

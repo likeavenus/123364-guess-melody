@@ -6,19 +6,18 @@ export default class ResultWin extends AbstractView {
     super();
 
     this.state = setTime(state);
-    this.stats = this.state.stats;
   }
 
   get template() {
-    const timeText = getFormattedTimeText(this.stats.time);
+    const timeText = getFormattedTimeText(this.state.time);
 
     return `
       <section class="main main--result">
         <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
         <h2 class="title">Вы настоящий меломан!</h2>
-        <div class="main-stat">За&nbsp;${timeText}<br>вы&nbsp;отгадали ${this.stats.rightAnswers}&nbsp;мелодии</div>
-        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.stats.otherPlayersPercent}%&nbsp;игроков</span>
+        <div class="main-stat">За&nbsp;${timeText}<br>вы&nbsp;отгадали ${this.state.rightAnswers}&nbsp;мелодии</div>
+        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.state.otherPlayersPercent}%&nbsp;игроков</span>
         <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
       </section>
     `.trim();

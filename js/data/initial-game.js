@@ -327,9 +327,8 @@ export const getFormattedTimeText = (time) => {
 
 export const setTime = (state) => {
   const newState = Object.assign({}, state);
-  const time = newState.time;
 
-  newState.stats.time = initialGame.time - time;
+  newState.time = initialGame.time - newState.time;
 
   return newState;
 };

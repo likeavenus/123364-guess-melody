@@ -2,7 +2,7 @@ import WelcomeView from './view';
 import {showScreen} from '../helpers/show-screen';
 import App from '../app';
 
-class Welcome {
+export default class Welcome {
   constructor() {
     this.view = new WelcomeView();
   }
@@ -15,7 +15,3 @@ class Welcome {
     };
   }
 }
-
-const welcome = new Welcome();
-
-export default welcome;
