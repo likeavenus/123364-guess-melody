@@ -1,11 +1,11 @@
 import AbstractView from '../helpers/abstract-view';
-import {getFormattedTimeText, setTime} from '../data/initial-game';
+import {getFormattedTimeText} from '../data/initial-game';
 
 export default class ResultWin extends AbstractView {
   constructor(state) {
     super();
 
-    this.state = setTime(state);
+    this.state = state;
   }
 
   get template() {
@@ -17,7 +17,7 @@ export default class ResultWin extends AbstractView {
 
         <h2 class="title">Вы настоящий меломан!</h2>
         <div class="main-stat">За&nbsp;${timeText}<br>вы&nbsp;отгадали ${this.state.rightAnswers}&nbsp;мелодии</div>
-        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.state.otherPlayersPercent}%&nbsp;игроков</span>
+        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.state.winPersent}%&nbsp;игроков</span>
         <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
       </section>
     `.trim();

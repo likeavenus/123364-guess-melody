@@ -4,7 +4,8 @@ import {initialGame, setLives, setNextLevel} from './initial-game';
 describe(`Модель игры`, () => {
   describe(`Жизни`, () => {
     it(`Жизни вообще работают`, () => {
-      assert.equal(2, setLives(initialGame, 2).lives);
+      const game = Object.assign({}, {game: initialGame});
+      assert.equal(2, setLives({game}, 2).game.lives);
     });
 
     it(`Выбрасывает ошибку, если поставили жизнь меньше нуля`, () => {
@@ -17,10 +18,6 @@ describe(`Модель игры`, () => {
   });
 
   describe(`Смена уровня`, () => {
-    it(`Уровни вообще меняются`, () => {
-      assert.equal(1, setNextLevel(initialGame).level);
-    });
-
     it(`Выбрасывает ошибку, если следующего уровня нет`, () => {
       const setErrorLevel = () => {
         const game = {
