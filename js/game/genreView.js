@@ -4,7 +4,7 @@ export default class LevelGenre extends AbstractView {
   constructor(state) {
     super();
 
-    this.level = state;
+    this.quest = state;
     this.sendButton = null;
     this.answerCheckboxes = null;
   }
@@ -12,13 +12,13 @@ export default class LevelGenre extends AbstractView {
   get template() {
     return `
       <section class="main main--level main--level-genre">
-        <h2 class="title">${this.level.title}</h2>
+        <h2 class="title">${this.quest.question}</h2>
         <form class="genre">
-        ${this.level.answers.map((answer) => `
+        ${this.quest.answers.map((answer) => `
           <div class="genre-answer">
-            <div class="player-wrapper"></div>
-            <input type="checkbox" name="answer" value="${answer.id}" id="a-${answer.id}">
-            <label class="genre-answer-check" for="a-${answer.id}"></label>
+            <div class="player-wrapper" src="${answer.src}"></div>
+            <input type="checkbox" name="answer" value="${answer.genre}" id="a-${answer.genre}">
+            <label class="genre-answer-check" for="a-${answer.genre}"></label>
           </div>
         `).join(``)}
           <button class="genre-answer-send" type="submit" disabled>Ответить</button>
@@ -65,7 +65,7 @@ export default class LevelGenre extends AbstractView {
     return Array.from(this.answerCheckboxes).filter((checkbox) => {
       return checkbox.checked;
     }).map((checkbox) => {
-      return +checkbox.value;
-    });
+      return checkbox.value;
+    }).sort((a, b) => a - b);
   }
 }

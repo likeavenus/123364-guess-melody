@@ -3,12 +3,6 @@ import Game from './game/presenter';
 import Result from './result/presenter';
 import {getHash} from './helpers/location';
 
-const route = {
-  '': Welcome,
-  'game': Game,
-  'result': Result,
-};
-
 class Application {
   constructor() {
 
@@ -18,12 +12,25 @@ class Application {
   }
 
   init() {
-    this.changeRoute();
+    window.fetch(`https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`)
+      .then((response) => response.json())
+      .then((quests) => {
+        this.initRoutes(quests);
+        this.changeRoute();
+      });
+  }
+
+  initRoutes(data) {
+    this.routes = {
+      '': new Welcome(),
+      'game': new Game(data),
+      'result': new Result(),
+    };
   }
 
   changeRoute() {
     const hash = getHash(location.hash);
-    const presenter = new route[hash]();
+    const presenter = this.routes[hash];
 
     presenter.init();
   }

@@ -287,11 +287,11 @@ export const isEndOfGame = (lives, NextQuest) => {
 };
 
 export const setAnswer = (state, answer) => {
-  const quest = state.levels[state.level];
-  const correctAnswer = quest.answer;
+  const quest = state.quests[state.level];
+  const correctAnswer = isCorrectAnswer(quest, answer);
   let game = null;
 
-  if (isCorrectAnswer(correctAnswer, answer)) {
+  if (correctAnswer) {
     game = setCorrectAnswerToStatistic(state);
   } else {
     game = setLives(state, state.lives - 1);
@@ -300,14 +300,14 @@ export const setAnswer = (state, answer) => {
   return game;
 };
 
-const isCorrectAnswer = (correctAnswer, answer) => {
-  const userAnswer = answer.sort((a, b) => {
-    return a - b;
-  });
-
-  return correctAnswer.every((item, i) => {
-    return item === userAnswer[i];
-  });
+const isCorrectAnswer = (quest, answer) => {
+  if (quest.type === `genre`) {
+    return answer.every((item) => item === quest.genre);
+  } else if (quest.type === `artist`) {
+    return answer;
+  } else {
+    throw new TypeError(`Нет типа ${quest.type}`);
+  }
 };
 
 export const setCorrectAnswerToStatistic = (state) => {
