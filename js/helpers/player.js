@@ -10,9 +10,17 @@ const syncState = (player, element) => {
   element.classList.toggle(`player--is-playing`, !player.paused);
 };
 
+const disableAllPlayers = () => {
+  const players = document.querySelectorAll(`audio`);
+
+  Array.from(players, (player) => {
+    player.pause();
+  });
+};
 
 const switchState = (state, player, element) => {
   if (player.paused) {
+    disableAllPlayers();
     player.play();
     state.stopAnimation = animationObj.animate(
         animationObj.getAnimation(player.currentTime, 1000, player.duration),
