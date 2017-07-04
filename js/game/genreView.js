@@ -33,8 +33,9 @@ export default class LevelGenre extends AbstractView {
     this.sendButton = element.querySelector(`.genre-answer-send`);
     this.answerCheckboxes = element.querySelectorAll(`input[type="checkbox"]`);
     const players = this.element.querySelectorAll(`.player-wrapper`);
+    const audio = [];
 
-    Array.from(players).forEach((player, i) => initializePlayer(player, this.quest.answers[i].src));
+    Array.from(players).forEach((player, i) => audio.push(initializePlayer(player, this.quest.answers[i].src)));
 
     Array.from(this.answerCheckboxes).forEach((input) => {
       input.addEventListener(`change`, () => {
@@ -46,6 +47,8 @@ export default class LevelGenre extends AbstractView {
       e.preventDefault();
 
       const answers = this.getAnswers();
+
+      audio.forEach((destroyAudio) => destroyAudio());
 
       this.onClick(answers);
     });

@@ -10,6 +10,11 @@ const view = {
   genre: Genre,
 };
 
+const endGameType = {
+  lives: `lives`,
+  quests: `quests`,
+};
+
 export default class Game {
   constructor(quests) {
     this.game = initialGame;
@@ -59,15 +64,23 @@ export default class Game {
     const isEnd = endGame[0];
 
     if (isEnd) {
-      const endType = endGame[1];
+      const endType = endGameType[endGame[1]];
       this.stopTimer();
 
-      if (endType === `lives`) {
-        this.endGame(false);
-      } else if (endType === `quests`) {
-        this.endGame(true);
-      } else {
-        throw new TypeError(`Нет типа ${endType}`);
+      switch (endType) {
+        case `lives`: {
+          this.endGame(false);
+          break;
+        }
+
+        case `quests`: {
+          this.endGame(true);
+          break;
+        }
+
+        default: {
+          throw new TypeError(`Нет типа ${endType}`);
+        }
       }
     } else {
       this.game = setNextLevel(this.state);

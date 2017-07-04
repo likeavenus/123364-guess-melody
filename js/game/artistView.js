@@ -33,12 +33,12 @@ export default class LevelArtist extends AbstractView {
   bind() {
     const answerButtons = this.element.querySelectorAll(`.main-answer-r`);
     const player = this.element.querySelector(`.player-wrapper`);
-
-    initializePlayer(player, this.quest.src, true);
+    const destroyPlayer = initializePlayer(player, this.quest.src, true);
 
     Array.from(answerButtons).forEach((button) => {
       button.addEventListener(`change`, (e) => {
         this.onClick(e.target.value === `true`);
+        destroyPlayer();
       });
     });
   }
