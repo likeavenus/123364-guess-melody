@@ -39,18 +39,21 @@ export const setNextLevel = (state) => {
 };
 
 /**
- * @param {Number} lives
- * @param {*} NextQuest
- *
- * @return {Array} - [конец игры, причина окончания игры]
- */
-export const isEndOfGame = (lives, NextQuest) => {
+* @enum EndGameType
+*/
+export const EndGameType = {
+  LIVES: `lives`,
+  QUESTS: `quests`,
+  NOT_ENDED: `not the end`
+};
+
+export const endOfGame = (lives, NextQuest) => {
   if (lives === 0) {
-    return [true, `lives`];
+    return EndGameType.LIVES;
   } else if (!NextQuest) {
-    return [true, `quests`];
+    return EndGameType.QUESTS;
   } else {
-    return [false];
+    return EndGameType.NOT_ENDED;
   }
 };
 

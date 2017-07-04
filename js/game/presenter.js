@@ -1,4 +1,4 @@
-import {initialGame, setAnswer, isEndOfGame, updateTime, setNextLevel, preprocessToSend} from '../data/initial-game';
+import {initialGame, setAnswer, endOfGame, updateTime, setNextLevel, preprocessToSend, EndGameType} from '../data/initial-game';
 import {showScreen} from '../helpers/show-screen';
 import Timer from './timerView';
 import Artist from './artistView';
@@ -8,11 +8,6 @@ import app from '../app';
 const view = {
   artist: Artist,
   genre: Genre,
-};
-
-const endGameType = {
-  lives: `lives`,
-  quests: `quests`,
 };
 
 export default class Game {
@@ -60,31 +55,29 @@ export default class Game {
 
   showNextLevel() {
     const quest = this.getQuestState(this.game.level + 1);
-    const endGame = isEndOfGame(this.game.lives, quest);
-    const isEnd = endGame[0];
+    const endGameType = endOfGame(this.game.lives, quest);
 
-    if (isEnd) {
-      const endType = endGameType[endGame[1]];
-      this.stopTimer();
-
-      switch (endType) {
-        case `lives`: {
-          this.endGame(false);
-          break;
-        }
-
-        case `quests`: {
-          this.endGame(true);
-          break;
-        }
-
-        default: {
-          throw new TypeError(`Нет типа ${endType}`);
-        }
+    switch (endGameType) {
+      case EndGameType.LIVES: {
+        this.stopTimer();
+        this.endGame(false);
+        break;
       }
-    } else {
-      this.game = setNextLevel(this.state);
-      this.continueGame();
+
+      case EndGameType.QUESTS: {
+        this.stopTimer();
+        this.endGame(true);
+        break;
+      }
+
+      case EndGameType.NOT_ENDED: {
+        this.game = setNextLevel(this.state);
+        this.continueGame();
+        break;
+      }
+
+      default:
+        throw new TypeError(`Нет типа ${endGameType}`);
     }
   }
 
