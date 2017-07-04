@@ -55,11 +55,7 @@ export default class LevelGenre extends AbstractView {
   }
 
   validateForm() {
-    if (this.isSomeCheckboxChecked()) {
-      this.sendButton.disabled = false;
-    } else {
-      this.sendButton.disabled = true;
-    }
+    this.sendButton.disabled = !this.isSomeCheckboxChecked();
   }
 
   isSomeCheckboxChecked() {

@@ -101,18 +101,13 @@ export const setTime = (state) => {
   return newState;
 };
 
-// Задаю счетчиком айди своей статистики,
-// чтобы удобно искать в массиве
-let newStatCounter = 0;
-
 export const getWinPersent = (state, stats) => {
-  newStatCounter += 1;
-
-  stats.push({
-    id: newStatCounter,
+  const playerStats = {
     time: state.time,
     answers: state.rightAnswers,
-  });
+  };
+
+  stats.push(playerStats);
 
   const newStats = stats
     .sort((a, b) => b.answers - a.answers)
@@ -124,7 +119,7 @@ export const getWinPersent = (state, stats) => {
       }
     });
 
-  const currentResultIndex = newStats.findIndex((item) => item.id === newStatCounter);
+  const currentResultIndex = newStats.findIndex((item) => item === playerStats);
   const betterPlaceThanOther = newStats.length - (currentResultIndex + 1);
   const winPersent = betterPlaceThanOther / newStats.length * 100;
   const newState = Object.assign({}, state, {winPersent});
